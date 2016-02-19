@@ -2,7 +2,8 @@
   "name": "bawabu",
   "version": "1.0.0",
   "description": "A checkin-checkout management system.",
-  "main": "server.js",  
+  "main": "server.js", 
+  "license" : "BSD-3-Clause", 
   "repository": {
     "type": "git",
     "url": "https://github.com/andela-ekarumbi/Bawabu/"
