@@ -4,9 +4,8 @@
     angular.module('bawabu', [
         'ngMaterial',
         'ngRoute',
-    ]);
-
-    angular.config(function($routeProvider){
+    ])
+    .config(function($routeProvider){
         $routeProvider.otherwise('/');
     });
 })();
