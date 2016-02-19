@@ -2,15 +2,10 @@
   "name": "bawabu",
   "version": "1.0.0",
   "description": "A checkin-checkout management system.",
-  "main": "server.js\t",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
+  "main": "server.js",  
   "repository": {
     "type": "git",
     "url": "https://github.com/andela-ekarumbi/Bawabu/"
   },
-  "author": "mabawabu",
-  "license": "ISC"
+  "author": "mabawabu"  
 }
