@@ -16,7 +16,7 @@ module.exports = function( wagner ) {
 
       user.save(function( error ) {
         if ( error ) {
-          handleError( error );
+          handleError( error, res );
         }
 
         return res.json({
@@ -31,7 +31,7 @@ module.exports = function( wagner ) {
 
 }
 
-function handleError( error ) {
+function handleError( error, res ) {
   if ( error ) {
     return res
       .status( status.INTERNAL_SERVER_ERROR )
