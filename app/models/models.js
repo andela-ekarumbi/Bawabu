@@ -5,7 +5,7 @@ var mongoose = require('mongoose'),
 module.exports = function( wagner ) {
 
   // connect to database
-  mongoose.connect( config.database );
+  mongoose.connect( process.env.DATABASE || config.database );
 
   var User = 
     mongoose.model( 'User', require('./user'), 'users' );

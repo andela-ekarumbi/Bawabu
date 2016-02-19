@@ -16,6 +16,15 @@ app.use( bodyParser.json() );
 // parse application/x-www-form-urlencoded
 app.use( bodyParser.urlencoded({ extended: true }) );
 
+// configure app to handel CORS req
+app.use(function( req, res, next ) {
+  res.setHeader('Access-Control-Allow-Origin', "*");
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+  res.setHeader('Access-Control-Allow-Headers', 
+    'X-Requested-With, content-type, Authorisation');
+  next();
+});
+
 app.use( '/api/v1', require('./app/routes/api')( wagner ));
 
 app.listen( process.env.PORT || config.port );
