@@ -2,10 +2,19 @@
   "name": "bawabu",
   "version": "1.0.0",
   "description": "A checkin-checkout management system.",
-  "main": "server.js",  
+  "main": "server.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/andela-ekarumbi/Bawabu/"
   },
-  "author": "mabawabu"  
+  "author": "mabawabu",
+  "dependencies": {
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "http-status": "^0.2.0",
+    "jsonwebtoken": "^5.7.0",
+    "morgan": "^1.7.0",
+    "underscore": "^1.8.3",
+    "wagner": "^0.6.4"
+  }
 }
