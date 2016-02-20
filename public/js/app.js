@@ -20,7 +20,6 @@
         $routeProvider.when('/', {
             templateUrl: 'partials/home.html',
             controller: 'HomeController',
-            controllerAs: 'home',
             resolve: {
                 auth: function($location, AuthService){
                     if(AuthService.isAuthenticated()){

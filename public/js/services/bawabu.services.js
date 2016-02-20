@@ -1,16 +1,19 @@
 (function(){
     'use strict';
 
-    angular.module('bawabu')
+    var bawabu = angular.module('bawabu');
 
-    .factory('AuthService', [
+    bawabu.factory('AuthService', [
             '$http', '$location', '$cookies', '$mdToast',
             function($http, $location, $cookies, $mdToast){
+
         var AuthService = {
             isAuthenticated: isAuthenticated,
             authenticate: authenticate,
             getAuthToken: getAuthToken,
-            setAuthToken: setAuthToken
+            setAuthToken: setAuthToken,
+            getCurrentUser: getCurrentUser,
+            setCurrentUser: setCurrentUser
         };
 
         var API = "https://bawabu.herokuapp.com/api/v1/";
@@ -22,7 +25,8 @@
                 password: user.password
             })
             .then(function(success){
-                AuthService.setAuthToken(success.data);
+                AuthService.setAuthToken(success.token);
+                AuthService.setCurrentUser(success.user);
                 console.log("Logged in: ", success);
                 $location.path('/');
             }, function(error) {
@@ -43,10 +47,18 @@
             $cookies.put('token', token);
         }
 
-        return AuthService;
-    }])
+        function setCurrentUser(user) {
+            sessionStorage.currentUser = user;
+        };
 
-    .factory('UserService', ['$http'], function ($http) {
+        function getCurrentUser() {
+            return sessionStorage.currentUser;
+        };
+
+        return AuthService;
+    }]);
+
+    bawabu.factory('UserService', ['$http', function ($http) {
 
         // Get all users
 
@@ -76,5 +88,6 @@
         };
 
         return UserService;
-    });
+    }]);
+
 })();

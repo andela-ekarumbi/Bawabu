@@ -2,16 +2,37 @@
     'use strict';
 
     angular.module('bawabu')
-    .controller('HomeController', ['$scope', 'User' function($scope){
-        var vm = this;
-        vm.search = search;
-        self.selectedItem = null;
-        self.searchText = null;
 
-        vm.users = 
+    .controller('HomeController', ['$scope', 'UserService', 'AuthService',
+     function($scope, UserService, AuthService){
+        
+        $scope.search = search;
+        $scope.selectedItem = null;
+        $scope.searchText = null;
+
+        $scope.users = [
+                {
+                    id: 1,
+                    name: 'JACK'
+                },
+                {
+                    id: 2,
+                    name: 'JAMES'
+                },
+                {
+                    id: 3,
+                    name: 'AUSTIN'
+                },
+                {
+                    id: 4,
+                    name: 'ESTON'
+                }
+            ];
+
+        var currentUser = AuthService.getCurrentUser();
 
         var search = function (query){
-            var results = query ? vm.users.filter(createFilterFor(query)) : [];
+            var results = query ? $scope.users.filter(createFilterFor(query)) : $scope.users;
             return results;
         }
 
@@ -19,27 +40,26 @@
             var lowercaseQuery = query.toLowerCase();
 
             return function filterFn(user){
-                return user._lowername.indexOf(lowercaseQuery) === 0;
+                return (user._lowername.indexOf(lowercaseQuery) >= 0);
             };
         }
 
         function activate(){
-            vm.users.map(function(user){
+            $scope.users.map(function(user){
                 user._lowername = user.name.toLowerCase();
                 return user;
             });
         }
 
         activate();
-        console.log(vm.users);
     }])
 
 
     .controller('LoginController', ['AuthService', function(AuthService){
-        var self = this;
+        var $scope = this;
 
-        self.login = function(){
-            AuthService.authenticate(self.user);
+        $scope.login = function(){
+            AuthService.authenticate($scope.user);
         };
     }]);
 })();
