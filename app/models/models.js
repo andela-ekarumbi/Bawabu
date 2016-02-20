@@ -14,6 +14,8 @@ module.exports = function( wagner ) {
     mongoose.model( 'Staff', require('./staff'), 'staff' );
   var Log = 
     mongoose.model( 'Log', require('./log'), 'logs' );
+  var Guest =
+    mongoose.model( 'Guest', require('./guest'), 'guests' );
 
   var models = {
     User: User,

@@ -18,6 +18,10 @@
     "mongoose": "^4.4.4",
     "morgan": "^1.7.0",
     "underscore": "^1.8.3",
+<<<<<<< HEAD
+=======
+    "wagner": "^0.6.4",
+>>>>>>> 9d96a85bf82b7915141d4f64ec2a86c5d1240e9d
     "wagner-core": "^0.2.0"
   }
 }

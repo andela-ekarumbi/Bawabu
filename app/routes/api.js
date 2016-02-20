@@ -20,11 +20,10 @@ module.exports = function( wagner ) {
         if ( error ) {
           handleError( error, res );
         }else {
-          
-        return res.json({
-          success: true,
-          message: 'User successfully created'
-        });
+          return res.json({
+            success: true,
+            message: 'User successfully created'
+          });
         }
       });
     };
@@ -47,8 +46,7 @@ module.exports = function( wagner ) {
           // no user found
           return res.json({
             success: false,
-            message: 'Authentication failed. \
-            User not found.'
+            message: 'Authentication failed. User not found.'
           });
         } else if ( user ) {
           // user found
@@ -59,8 +57,7 @@ module.exports = function( wagner ) {
             // auth failure
             return res.json({
               success: false,
-              message: 'Authentication failed. \
-              Wrong password'
+              message: 'Authentication failed. Wrong password'
             });
           } else {
             // auth success
@@ -86,7 +83,7 @@ module.exports = function( wagner ) {
   /* Middleware for token validation */
   api.use(function( req, res, next ) {
     // get token from req
-    var token = req.body.token || 
+    var token = req.body.token ||
       req.params.token || req.headers['x-access-token'];
 
     // decode the token
@@ -109,7 +106,7 @@ module.exports = function( wagner ) {
       // return access forbidden 403
       return res.status( status.FORBIDDEN ).json({
         success: false,
-        message: 'No token provided.' 
+        message: 'No token provided.'
       });
     }
 
@@ -122,6 +119,13 @@ module.exports = function( wagner ) {
     };
   }));
 
+  api.route('/user/id/:user_id')
+    .get( wagner.invoke(function( User ) {
+      return function( req, res ) {
+        User.findById( req.body.user_id, handleOne.bind( null, 'user', res));
+      };
+    }));
+
   api.route('/staff')
     // get all staff
     .get(wagner.invoke(function( Staff ) {
@@ -132,7 +136,7 @@ module.exports = function( wagner ) {
     // create a new staff member
     .post(wagner.invoke(function( Staff, Log ) {
       return function( req, res ) {
-        staff = new Staff()
+        staff = new Staff();
 
         staff.name = req.body.name;
 
@@ -145,8 +149,54 @@ module.exports = function( wagner ) {
       };
     }));
 
+  api.route('/checkin/name/:find_name')
+    .post(wagner.invoke(function( Staff, Log ) {
+      return function( req, res ) {
+        if ( req.body.staff ) {
+          // find staff
+          Staff.findOne({ name: req.body.staff }).exec(function( error, staff ) {
+            if( error ) {
+              handleError( error );
+            }
+
+            if ( !staff ) {
+              return res.json({
+                success: true,
+                message: 'No user exists with that name.'
+              });
+            }
+
+            return res.json({
+              success: true,
+              staff: staff
+            });
+          });
+        } else if ( req.body.guest_name ) {
+
+        } else {
+          return res.json({
+            success: false,
+            message: 'No fields defined.'
+          });
+        }
+      };
+    }));
+
   return api;
 
+};
+
+function handleOne( property, res, error, result) {
+  if ( error ) {
+    handleError( error );
+  }
+
+  if ( !result ) {
+    return res.json({
+      success: false,
+      message: 'Not record exists.'
+    });
+  }
 }
 
 function handleMany( property, res, error, results ) {

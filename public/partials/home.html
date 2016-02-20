@@ -1,0 +1,24 @@
+<md-content layout="row" layout-align="space-around center" layout-padding layout-margin flex>
+    <div layout="column" flex-lg="33" flex-md="40" flex="75">
+        <div layout="row">
+            <md-autocomplete flex required md-input-name="name"
+                md-selected-item="home.selectedItem"
+                md-search-text="home.searchText"
+                md-items="item in home.search(home.searchText)"
+                md-item-text="item.name"
+                md-floating-label="Name">
+                <md-item-template>
+                    <span md-highlight-text="home.searchText">{{ item.name }}</span>
+                </md-item-template>
+            </md-autocomplete>
+        </div>
+        <div layout="row" layout-align="start center" flex-lg="33" flex-md="40" flex="75" ng-if="home.searchText && !home.selectedItem">
+            <md-button class="md-primary md-raised">Check In Guest</md-button>
+        </div>
+        <div layout="row" layout-align="start center" flex-lg="33" flex-md="40" flex="75" ng-if="home.selectedItem">
+            <md-button class="md-primary md-raised">
+                {{ home.selectedUser.checkedIn ? 'Check Out' : 'Check In' }}
+            </md-button>
+        </div>
+    </div>
+</md-content>
