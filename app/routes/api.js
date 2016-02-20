@@ -121,6 +121,29 @@ module.exports = function( wagner ) {
     };
   }));
 
+  api.route('/staff')
+    // get all staff
+    .get(wagner.invoke(function( Staff ) {
+      return function( req, res ) {
+        Staff.find( handleMany.bind( null, 'staff', res ) );
+      };
+    }))
+    // create a new staff member
+    .post(wagner.invoke(function( Staff, Log ) {
+      return function( req, res ) {
+        staff = new Staff()
+
+        staff.name = req.body.name;
+
+        staff.save(function( error, staff ) {
+          return res.json({
+            success: true,
+            message: 'Staff created successfully.'
+          });
+        });
+      };
+    }));
+
   return api;
 
 }
