@@ -19,12 +19,13 @@ module.exports = function( wagner ) {
       user.save(function( error ) {
         if ( error ) {
           handleError( error, res );
-        }
-
+        }else {
+          
         return res.json({
           success: true,
           message: 'User successfully created'
         });
+        }
       });
     };
   }));
