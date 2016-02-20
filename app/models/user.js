@@ -21,10 +21,9 @@ var UserSchema = new Schema({
     required: true
   },
   role: {
-    name: {
-      type: String,
-      enum: ['staff', 'bawabu', 'admin']
-    }    
+    type: String,
+    required: true,
+    enum: ['staff', 'bawabu', 'admin']
   },
   checked_in: {
     type: Boolean,
