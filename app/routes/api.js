@@ -16,7 +16,7 @@ module.exports = function( wagner ) {
       user.password = req.body.password;
       user.name = req.body.name;
 
-      User.save(function( error ) {
+      user.save(function( error ) {
         if ( error ) {
           handleError( error, res );
         }
