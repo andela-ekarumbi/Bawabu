@@ -150,7 +150,7 @@ module.exports = function( wagner ) {
 
 function handleMany( property, res, error, results ) {
   if ( error ) {
-    handleError( error );
+    handleError( error, res );
   }
 
   if ( !results ) {
@@ -166,7 +166,7 @@ function handleMany( property, res, error, results ) {
   res.json( json );
 }
 
-function handleError( error ) {
+function handleError( error, res ) {
   return res
     .status( status.INTERNAL_SERVER_ERROR )
     .json({
