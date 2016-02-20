@@ -9,9 +9,15 @@ module.exports = function( wagner ) {
 
   var User = 
     mongoose.model( 'User', require('./user'), 'users' );
+  var Staff =
+    mongoose.model( 'Staff', require('./staff'), 'staff' );
+  var Log = 
+    mongoose.model( 'Log', require('./log'), 'logs' );
 
   var models = {
-    User: User
+    User: User,
+    Staff: Staff,
+    Log: Log
   };
 
   _.each( models, function( value, key ) {
