@@ -15,6 +15,7 @@ module.exports = function( wagner ) {
       user.username = req.body.username;
       user.password = req.body.password;
       user.name = req.body.name;
+      user.role = req.body.role;
 
       user.save(function( error ) {
         if ( error ) {
