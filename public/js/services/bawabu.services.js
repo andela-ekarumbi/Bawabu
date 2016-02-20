@@ -2,6 +2,7 @@
     'use strict';
 
     angular.module('bawabu')
+
     .factory('AuthService', [
             '$http', '$location', '$cookies', '$mdToast',
             function($http, $location, $cookies, $mdToast){
@@ -43,5 +44,37 @@
         }
 
         return AuthService;
-    }]);
+    }])
+
+    .factory('UserService', ['$http'], function ($http) {
+
+        // Get all users
+
+        var getAllUsers = function () {
+            return [
+                {
+                    id: 1,
+                    name: 'JACK'
+                },
+                {
+                    id: 2,
+                    name: 'JAMES'
+                },
+                {
+                    id: 3,
+                    name: 'AUSTIN'
+                },
+                {
+                    id: 4,
+                    name: 'ESTON'
+                }
+            ];
+        };
+
+        var UserService = {
+
+        };
+
+        return UserService;
+    });
 })();

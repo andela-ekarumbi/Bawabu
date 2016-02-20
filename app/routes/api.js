@@ -72,7 +72,8 @@ module.exports = function( wagner ) {
             return res.json({
               success: true,
               message: 'Authenticated.',
-              token: token
+              token: token,
+              user: user
             });
           }
         }
@@ -149,38 +150,102 @@ module.exports = function( wagner ) {
       };
     }));
 
-  api.route('/checkin/name/:find_name')
-    .post(wagner.invoke(function( Staff, Log ) {
+  api.route('/check/id/:person_id')
+    .get(wagner.invoke(function( Staff, Log ) {
       return function( req, res ) {
-        if ( req.body.staff ) {
-          // find staff
-          Staff.findOne({ name: req.body.staff }).exec(function( error, staff ) {
-            if( error ) {
+        // when expecting staff id.
+        // find staff
+        Staff.findOne({ _id: req.params.person_id }).exec(function( error, staff ) {
+          if( error ) {
+            handleError( error );
+          }
+
+          if ( !staff ) {
+            // look for user when no staff
+            User.findById( req.params.person_id, function( error, user ) {
+              if ( error ) {
+                handleError( error );
+              }
+
+              if ( !user ) {
+                // user not found
+                Guest.findById( req.params.person_id, function( error, guest ) {
+                  if ( error ) {
+                    handleError( error );
+                  }
+
+                  if ( !guest ) {
+                    return res.json({
+                      success: false,
+                      message: 'Guest not found.'
+                    });
+                  }
+
+                  return res.json({
+                    success: true,
+                    guest: guest,
+                    role: 'guest'
+
+                  });
+                });
+
+                return res.json({                  
+                  success: false,
+                  message: 'User not found.'
+                });
+              }
+
+              return res.json({
+                success: true,
+                user: user,
+                role: 'user'
+              });
+            });
+
+            return res.json({
+              success: true,
+              message: 'No user exists with that name.'
+            });
+          }
+
+          return res.json({
+            success: true,
+            staff: staff,
+            role: 'staff'
+          });
+        });
+      };
+    }));
+
+    /* Checkin Staff */
+    api.route('/checkin/id/:staff_id')
+      .post(wagner.invoke(function( Staff, Log ) {
+        return function( req, res ) {
+          Staff.findById(  req.params.staff_id, function( error, staff ) {
+            if ( error ) {
               handleError( error );
             }
 
             if ( !staff ) {
               return res.json({
-                success: true,
-                message: 'No user exists with that name.'
+                success: false,
+                message: 'Staff not found.'
               });
             }
 
-            return res.json({
-              success: true,
-              staff: staff
-            });
-          });
-        } else if ( req.body.guest_name ) {
+            // create a new log
+            var log = new Log();
 
-        } else {
-          return res.json({
-            success: false,
-            message: 'No fields defined.'
+            log.time_in = new Date();
+            log.items.push({
+              name: req.body.name,
+              desc: req.body.desc,
+              serial_no: req.body.serial_no
+            });
+
           });
-        }
-      };
-    }));
+        };
+      }));
 
   return api;
 

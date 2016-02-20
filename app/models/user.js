@@ -20,9 +20,20 @@ var UserSchema = new Schema({
     type: String,
     required: true
   },
-  is_admin: {
-    type: Boolean
+  role: {
+    name: {
+      type: String,
+      enum: ['staff', 'bawabu', 'admin']
+    }    
   },
+  checked_in: {
+    type: Boolean,
+    default: false
+  },
+  last_visit_date: {
+    type: Date,
+    default: Date.now
+  },  
   created_at: {
     type: Date,
     default: Date.now
