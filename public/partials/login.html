@@ -1,0 +1,17 @@
+<md-content layout="row" flex layout-align="space-around center">
+    <div layout="column" flex-lg="33" flex-md="40" flex="75">
+        <form name="loginForm">
+            <md-input-container class="md-block">
+                <label>Username</label>
+                <input type="text" name="username" ng-model="login.user.username" />
+            </md-input-container>
+            <md-input-container class="md-block">
+                <label>Password</label>
+                <input type="password" name="password" ng-model="login.user.password" />
+            </md-input-container>
+        </form>
+        <md-button ng-disabled="loginForm.$pristine || loginForm.$invalid" class="md-raised md-primary" ng-click="login.login()">
+            Login
+        </md-button>
+    </div>
+</md-content>

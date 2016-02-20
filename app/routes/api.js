@@ -18,7 +18,7 @@ module.exports = function( wagner ) {
 
       user.save(function( error ) {
         if ( error ) {
-          handleError( error );
+          handleError( error, res );
         }
 
         return res.json({
@@ -46,8 +46,7 @@ module.exports = function( wagner ) {
           // no user found
           return res.json({
             success: false,
-            message: 'Authentication failed. \
-            User not found.'
+            message: 'Authentication failed. User not found.'
           });
         } else if ( user ) {
           // user found
@@ -58,8 +57,7 @@ module.exports = function( wagner ) {
             // auth failure
             return res.json({
               success: false,
-              message: 'Authentication failed. \
-              Wrong password'
+              message: 'Authentication failed. Wrong password'
             });
           } else {
             // auth success
@@ -85,7 +83,7 @@ module.exports = function( wagner ) {
   /* Middleware for token validation */
   api.use(function( req, res, next ) {
     // get token from req
-    var token = req.body.token || 
+    var token = req.body.token ||
       req.params.token || req.headers['x-access-token'];
 
     // decode the token
@@ -108,7 +106,7 @@ module.exports = function( wagner ) {
       // return access forbidden 403
       return res.status( status.FORBIDDEN ).json({
         success: false,
-        message: 'No token provided.' 
+        message: 'No token provided.'
       });
     }
 
@@ -186,7 +184,7 @@ module.exports = function( wagner ) {
 
   return api;
 
-}
+};
 
 function handleOne( property, res, error, result) {
   if ( error ) {
@@ -219,7 +217,7 @@ function handleMany( property, res, error, results ) {
   res.json( json );
 }
 
-function handleError( error ) {
+function handleError( error, res ) {
   return res
     .status( status.INTERNAL_SERVER_ERROR )
     .json({
