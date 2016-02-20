@@ -18,7 +18,7 @@ var LogSchema = new Schema({
     serial_no: {
       type: String
     }
-  }]
+  }],
   staff: {
     type: Schema.Types.ObjectId,
     ref: 'Staff'
