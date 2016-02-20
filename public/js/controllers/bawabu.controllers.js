@@ -2,37 +2,20 @@
     'use strict';
 
     angular.module('bawabu')
-    .controller('HomeController', ['$scope', function($scope){
+    .controller('HomeController', ['$scope', 'User' function($scope){
         var vm = this;
         vm.search = search;
         self.selectedItem = null;
         self.searchText = null;
 
-        vm.users = [
-            {
-                id: 1,
-                name: 'JACK'
-            },
-            {
-                id: 2,
-                name: 'JAMES'
-            },
-            {
-                id: 3,
-                name: 'AUSTIN'
-            },
-            {
-                id: 4,
-                name: 'ESTON'
-            }
-        ];
+        vm.users = 
 
-        function search(query){
+        var search = function (query){
             var results = query ? vm.users.filter(createFilterFor(query)) : [];
             return results;
         }
 
-        function createFilterFor(query){
+        var createFilterFor = function (query){
             var lowercaseQuery = query.toLowerCase();
 
             return function filterFn(user){
@@ -50,6 +33,8 @@
         activate();
         console.log(vm.users);
     }])
+
+
     .controller('LoginController', ['AuthService', function(AuthService){
         var self = this;
 
