@@ -1,5 +1,5 @@
 {
-  "port": "8080",
+  "port": "3000",
   "database": "mongodb://bawabuUser:loremipsum@ds049888.mongolab.com:49888/bawabu",
   "secret": "*5623498*#manontroppo"
 }
