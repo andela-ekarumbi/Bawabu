@@ -37,7 +37,7 @@ module.exports = function( wagner ) {
       User.findOne({
         username: req.body.username
       })
-      .select('name username password')
+      .select('name username password role')
       .exec(function( error, user ) {
         if ( error ) {
           throw error;
