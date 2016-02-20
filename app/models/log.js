@@ -8,6 +8,17 @@ var LogSchema = new Schema({
   time_out: {
     type: Date
   },
+  items:[{
+    name:{
+      type: String
+    },
+    desc: {
+      type: String
+    },
+    serial_no: {
+      type: String
+    }
+  }]
   staff: {
     type: Schema.Types.ObjectId,
     ref: 'Staff'
